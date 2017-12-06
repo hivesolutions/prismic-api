@@ -41,11 +41,17 @@ class DocumentAPI(object):
 
     def get_document(self, id):
         url = self.base_url + "documents/search"
-        contents = self.get(url, q = "[[at(document.id,\"%s\")]]" % id)
+        contents = self.get(
+            url,
+            response_type = "application/json",
+            q = "[[at(document.id,\"%s\")]]" % id
+        )
+        contents = self._decode(contents)
         results = contents["results"]
         return results[0] if results else None
 
     def search_documents(self):
         url = self.base_url + "documents/search"
-        contents = self.get(url)
+        contents = self.get(url, response_type = "application/json")
+        contents = self._decode(contents)
         return contents

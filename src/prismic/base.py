@@ -37,6 +37,8 @@ __copyright__ = "Copyright (c) 2008-2017 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
+import json
+
 import appier
 
 from . import document
@@ -83,3 +85,8 @@ class API(
         if not self.base_url:
             raise appier.OperationalError(message = "No base URL provided")
         self.base_url = self.base_url % self.repo
+
+    def _decode(self, data):
+        if not appier.legacy.is_string(data): return data
+        if appier.legacy.is_bytes(data): data = data.decode("utf-8")
+        return json.loads(data)
