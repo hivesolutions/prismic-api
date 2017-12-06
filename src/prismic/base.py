@@ -41,7 +41,7 @@ import appier
 
 from . import document
 
-BASE_URL = "https://%s.prismic.io/api/v2/"
+BASE_URL = "https://%s.prismic.io/api/v1/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
@@ -51,7 +51,7 @@ class API(
 ):
 
     def __init__(self, *args, **kwargs):
-        appier.OAuth2API.__init__(self, *args, **kwargs)
+        appier.API.__init__(self, *args, **kwargs)
         self.repo = appier.conf("PRISMIC_REPO", None)
         self.ref = appier.conf("PRISMIC_REF", None)
         self.token = appier.conf("PRISMIC_TOKEN", None)
@@ -61,9 +61,25 @@ class API(
         self.token = kwargs.get("token", self.token)
         self._build_url()
 
+    def build(
+        self,
+        method,
+        url,
+        data = None,
+        data_j = None,
+        data_m = None,
+        headers = None,
+        params = None,
+        mime = None,
+        kwargs = None
+    ):
+        auth = kwargs.pop("auth", True)
+        kwargs["ref"] = self.ref
+        if auth: kwargs["access_token"] = self.token
+
     def _build_url(self):
         if not self.repo:
             raise appier.OperationalError(message = "No repo name provided")
         if not self.base_url:
             raise appier.OperationalError(message = "No base URL provided")
-        self.base_url = "https://%s:%s@%s/" % (self.repo, self.base_url)
+        self.base_url = self.base_url % self.repo

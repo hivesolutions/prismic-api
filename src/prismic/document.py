@@ -39,8 +39,13 @@ __license__ = "Apache License, Version 2.0"
 
 class DocumentAPI(object):
 
-    def search_documents(self, id = None):
-        id = id or self.space
-        url = self.base_url + "documents/search" % id
+    def get_document(self, id):
+        url = self.base_url + "documents/search"
+        contents = self.get(url, q = "[[at(document.id,\"%s\")]]" % id)
+        results = contents["results"]
+        return results[0] if results else None
+
+    def search_documents(self):
+        url = self.base_url + "documents/search"
         contents = self.get(url)
         return contents

@@ -60,6 +60,12 @@ class PrismicApp(appier.WebApp):
         documents = api.search_documents()
         return documents
 
+    @appier.route("/documents/<str:id>", "GET")
+    def document(self, id):
+        api = self.get_api()
+        documents = api.get_document(id)
+        return documents
+
     def get_api(self):
         return base.get_api()
 
