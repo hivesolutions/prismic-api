@@ -52,85 +52,13 @@ class PrismicApp(appier.WebApp):
 
     @appier.route("/", "GET")
     def index(self):
-        return self.entries()
+        return self.documents()
 
-    @appier.route("/entries", "GET")
-    def entries(self):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
+    @appier.route("/documents", "GET")
+    def documents(self):
         api = self.get_api()
-        entries = api.list_entries(space = space)
-        return entries
-
-    @appier.route("/entries/<str:id>", "GET")
-    def entry(self, id):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
-        api = self.get_api()
-        entry = api.get_entry(id, space = space)
-        return entry
-
-    @appier.route("/content_types", "GET")
-    def content_types(self):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
-        api = self.get_api()
-        content_types = api.list_content_types(space = space)
-        return content_types
-
-    @appier.route("/content_types/<str:id>", "GET")
-    def content_type(self, id):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
-        api = self.get_api()
-        content_type = api.get_content_type(id, space = space)
-        return content_type
-
-    @appier.route("/assets", "GET")
-    def assets(self):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
-        api = self.get_api()
-        assets = api.list_assets(space = space)
-        return assets
-
-    @appier.route("/assets/<str:id>", "GET")
-    def asset(self, id):
-        space = self.field("space")
-        url = self.ensure_api()
-        if url: return self.redirect(url)
-        api = self.get_api()
-        asset = api.get_asset(id, space = space)
-        return asset
-
-    @appier.route("/oauth", "GET")
-    def oauth(self):
-        code = self.field("code")
-        api = self.get_api()
-        access_token = api.oauth_access(code)
-        self.session["ct.access_token"] = access_token
-        return self.redirect(
-            self.url_for("prismic.index")
-        )
-
-    @appier.exception_handler(appier.OAuthAccessError)
-    def oauth_error(self, error):
-        if "ct.access_token" in self.session: del self.session["ct.access_token"]
-        return self.redirect(
-            self.url_for("prismic.index")
-        )
-
-    def ensure_api(self):
-        access_token = appier.conf("CONTENTFUL_TOKEN", None)
-        access_token = self.session.get("ct.access_token", access_token)
-        if access_token: return
-        api = base.get_api()
-        return api.oauth_authorize()
+        documents = api.search_documents()
+        return documents
 
     def get_api(self):
         access_token = appier.conf("CONTENTFUL_TOKEN", None)
