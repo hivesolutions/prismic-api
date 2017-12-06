@@ -61,11 +61,7 @@ class PrismicApp(appier.WebApp):
         return documents
 
     def get_api(self):
-        access_token = appier.conf("CONTENTFUL_TOKEN", None)
-        access_token = self.session and self.session.get("ct.access_token", access_token)
-        api = base.get_api()
-        api.access_token = access_token
-        return api
+        return base.get_api()
 
 if __name__ == "__main__":
     app = PrismicApp()
