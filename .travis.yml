@@ -24,13 +24,13 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install twine
-script: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coverage run --source=shopify setup.py test; else python setup.py test; fi
+script: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coverage run --source=prismic setup.py test; else python setup.py test; fi
 after_success: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coveralls; fi
 deploy:
   provider: pypi
   user: joamag
   password:
-    secure: IHSKAyUmp1Gv2ZmO+r16rB9ocfIY8Ov/wwRZtVuGaTRogt34F42Of0y0IH1HNOjHu1VawaAIytCF9ETuB8JcYUcn6qo2qrqEeDZ8zi/UUrFiuCYBCBsdg91TUwxMfUrAfCLMKeQh8GkMuS5c1XWjxzMgNhRZb6FyCioaTiU4P2I=
+    secure: G3ryzdFkDRVaTw6d4vznoC4NuXvZn9fdOTtm9yt6YXo7y40ieivyNjL5bCl3eYsRXVVnM08FQIxVreg9zc+s32slLVl6gi5YwTYY5jpxFQl7v5m9OeCYK3taQQ1cafjhz8JGG5cHd4GbHJLSNZfsYzYQLetWvBYXqzQmn0e6deSg7dHIo4GamZUCeekn2NHIbJ+PFrlghqh55v7qv/PaP3MS3FllfAym299f/RWk0pxmcgTA/zayozo07xp2TXZg727y+D8LAOYfX4NQ/AKo4LXeSVg7+mAnzwIHX8EsvzUJUNBgg4pWfvaCfrvB/O5PqIeM3c+ZC4mh8gm1qRhbhVubGWxaKvviW5LcmuqbfmWNKGEYe+TfLMPvAdJdMDyftQZksskurt4mC8/RTxivUmRHzTn1iyWV7nOAq4lkmQOYOkmS+clNgM5crU6scl19DMc3ZNsQsDHOyRc0Mdb8Q0Pk+lV2UvqtoiJnTU6mCKg95HToM3YnLfqCaEbdtgtNzHBotBs+C2futwVOrrGycWjBCMCJqSlrDSPKnoXt/uOtXsbr7bJ0vvxWWNJZ46RgxXQxOfMw4fQzHrNJEdlzGoVlGnI7fN3jWbiPkKlsgNUAz1cBzrJjigcD5NVgWjgDXJHahxwgr1ii2s3Vi8MKJVuxK2nzF+7A1XySkB27hPc=
   distributions: sdist bdist_wheel
   on:
     tags: true
