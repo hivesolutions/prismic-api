@@ -1,0 +1,7 @@
+*.pyc
+
+session.shelve
+
+/dist
+/build
+/src/prismic_api.egg-info
