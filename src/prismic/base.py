@@ -41,7 +41,7 @@ import appier
 
 from . import document
 
-BASE_URL = "https://cdn.contentful.com/"
+BASE_URL = "https://%s.prismic.io/api/v2/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
@@ -52,8 +52,18 @@ class API(
 
     def __init__(self, *args, **kwargs):
         appier.OAuth2API.__init__(self, *args, **kwargs)
+        self.repository = appier.conf("PRISMIC_REPOSITORY", None)
         self.ref = appier.conf("PRISMIC_REF", None)
         self.token = appier.conf("PRISMIC_TOKEN", None)
         self.base_url = kwargs.get("base_url", BASE_URL)
+        self.repository = kwargs.get("name", self.repository)
         self.ref = kwargs.get("ref", self.ref)
         self.token = kwargs.get("token", self.token)
+        self._build_url()
+
+    def _build_url(self):
+        if not self.repository:
+            raise appier.OperationalError(message = "No repository name provided")
+        if not self.base_url:
+            raise appier.OperationalError(message = "No base URL provided")
+        self.base_url = "https://%s:%s@%s/" % (self.repository, self.base_url)
