@@ -39,31 +39,11 @@ __license__ = "Apache License, Version 2.0"
 
 import appier
 
-from . import document
+import prismic
 
-BASE_URL = "https://%s.prismic.io/api/v2/"
-""" The default base url to be used when no other
-base url value is provided to the constructor """
-
-class API(
-    appier.API,
-    document.DocumentAPI
-):
-
-    def __init__(self, *args, **kwargs):
-        appier.OAuth2API.__init__(self, *args, **kwargs)
-        self.repo = appier.conf("PRISMIC_REPO", None)
-        self.ref = appier.conf("PRISMIC_REF", None)
-        self.token = appier.conf("PRISMIC_TOKEN", None)
-        self.base_url = kwargs.get("base_url", BASE_URL)
-        self.repo = kwargs.get("repo", self.repo)
-        self.ref = kwargs.get("ref", self.ref)
-        self.token = kwargs.get("token", self.token)
-        self._build_url()
-
-    def _build_url(self):
-        if not self.repo:
-            raise appier.OperationalError(message = "No repo name provided")
-        if not self.base_url:
-            raise appier.OperationalError(message = "No base URL provided")
-        self.base_url = "https://%s:%s@%s/" % (self.repo, self.base_url)
+def get_api():
+    return prismic.API(
+        repo = appier.conf("PRISMIC_REPO"),
+        ref = appier.conf("PRISMIC_REF"),
+        token = appier.conf("PRISMIC_TOKEN")
+    )
