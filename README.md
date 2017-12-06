@@ -4,11 +4,8 @@ Simple [Prismic](http://prismic.io) Python API client.
 
 ## Configuration
 
-* `CONTENTFUL_ID` (`str`) - The Contentful identifier to make API requests (defaults to `None`)
-* `CONTENTFUL_SECRET` (`str`) - The secret key to be used to authenticate API requests (defaults to `None`)
-* `CONTENTFUL_TOKEN` (`str`) - The access token to be used for non OAuth space authentication (defaults to `None`)
-* `CONTENTFUL_REDIRECT_URL` (`str`) - The URL to be used for the OAuth redirection process (defaults to `None`)
-* `CONTENTFUL_SPACE` (`str`) - The identifier of the space to be used by default (default to `None`)
+* `PRISMIC_REF` (`str`) - The default Prismic reference to be used (defaults to `None`)
+* `PRISMIC_TOKEN` (`str`) - The secret token to be used to authenticate API requests (defaults to `None`)
 
 ## License
 
