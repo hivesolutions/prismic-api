@@ -53,4 +53,5 @@ class DocumentAPI(object):
         url = self.base_url + "documents/search"
         contents = self.get(url, q = q, lang = lang)
         contents = self._decode(contents)
-        return contents
+        results = contents["results"]
+        return results

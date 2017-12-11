@@ -94,6 +94,6 @@ class API(
         self.ref = self.get_label_ref(label)
 
     def _decode(self, data):
-        if not appier.legacy.is_string(data): return data
+        if not appier.legacy.is_string(data, all = True): return data
         if appier.legacy.is_bytes(data): data = data.decode("utf-8")
         return json.loads(data)
