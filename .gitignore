@@ -1,6 +1,6 @@
 *.pyc
 
-session.shelve
+session.shelve*
 
 /dist
 /build
