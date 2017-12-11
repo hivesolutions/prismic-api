@@ -41,6 +41,7 @@ import json
 
 import appier
 
+from . import ref
 from . import document
 
 BASE_URL = "https://%s.prismic.io/api/v1/"
@@ -49,6 +50,7 @@ base url value is provided to the constructor """
 
 class API(
     appier.API,
+    ref.RefAPI,
     document.DocumentAPI
 ):
 
@@ -62,6 +64,7 @@ class API(
         self.ref = kwargs.get("ref", self.ref)
         self.token = kwargs.get("token", self.token)
         self._build_url()
+        self._ensure_ref()
 
     def build(
         self,
@@ -85,6 +88,10 @@ class API(
         if not self.base_url:
             raise appier.OperationalError(message = "No base URL provided")
         self.base_url = self.base_url % self.repo
+
+    def _ensure_ref(self, label = "Master"):
+        if self.ref: return
+        self.ref = self.get_label_ref(label)
 
     def _decode(self, data):
         if not appier.legacy.is_string(data): return data

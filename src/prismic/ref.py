@@ -37,42 +37,22 @@ __copyright__ = "Copyright (c) 2008-2017 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-import appier
+class RefAPI(object):
 
-from . import base
+    def list_refs(self):
+        url = self.base_url[:-1]
+        contents = self.get(url)
+        contents = self._decode(contents)
+        refs = contents["refs"]
+        return refs
 
-class PrismicApp(appier.WebApp):
+    def get_label_ref(self, label):
+        refs = self.list_refs()
+        for ref in refs:
+            if not "label" in ref: continue
+            if not ref["label"] == label: continue
+            return ref["ref"]
+        return None
 
-    def __init__(self, *args, **kwargs):
-        appier.WebApp.__init__(
-            self,
-            name = "prismic",
-            *args, **kwargs
-        )
-
-    @appier.route("/", "GET")
-    def index(self):
-        return self.documents()
-
-    @appier.route("/documents", "GET")
-    def documents(self):
-        q = self.field("q", None)
-        lang = self.field("lang", "*")
-        api = self.get_api()
-        documents = api.search_documents(q = q, lang = lang)
-        return documents
-
-    @appier.route("/documents/<str:id>", "GET")
-    def document(self, id):
-        api = self.get_api()
-        documents = api.get_document(id)
-        return documents
-
-    def get_api(self):
-        return base.get_api()
-
-if __name__ == "__main__":
-    app = PrismicApp()
-    app.serve()
-else:
-    __path__ = []
+    def get_master_ref(self):
+        return self.get_label_ref("Master")

@@ -36,6 +36,8 @@ __license__ = "Apache License, Version 2.0"
 
 from . import base
 from . import document
+from . import ref
 
 from .base import BASE_URL, API
 from .document import DocumentAPI
+from .ref import RefAPI

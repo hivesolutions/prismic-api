@@ -49,8 +49,8 @@ class DocumentAPI(object):
         results = contents["results"]
         return results[0] if results else None
 
-    def search_documents(self, q = None):
+    def search_documents(self, q = None, lang = "*"):
         url = self.base_url + "documents/search"
-        contents = self.get(url, q = q)
+        contents = self.get(url, q = q, lang = lang)
         contents = self._decode(contents)
         return contents
