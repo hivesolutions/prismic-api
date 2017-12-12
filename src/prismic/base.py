@@ -89,8 +89,8 @@ class API(
             raise appier.OperationalError(message = "No base URL provided")
         self.base_url = self.base_url % self.repo
 
-    def _ensure_ref(self, label = "Master"):
-        if self.ref: return
+    def _ensure_ref(self, label = "Master", force = False):
+        if self.ref and not force: return
         self.ref = self.get_label_ref(label)
 
     def _decode(self, data):
