@@ -45,7 +45,7 @@ from . import ref
 from . import document
 
 BASE_URL = "https://%s.prismic.io/api/v1/"
-""" The default base url to be used when no other
+""" The default base URL to be used when no other
 base url value is provided to the constructor """
 
 class API(
