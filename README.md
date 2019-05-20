@@ -4,9 +4,11 @@ Simple [Prismic](http://prismic.io) Python API client.
 
 ## Configuration
 
-* `PRISMIC_REPO` (`str`) - The name of the repository to be used as context (defaults to `None`)
-* `PRISMIC_REF` (`str`) - The default Prismic reference to be used (defaults to `None`)
-* `PRISMIC_TOKEN` (`str`) - The secret token to be used to authenticate API requests (defaults to `None`)
+| Name | Type | Description |
+| ----- | ----- | ----- |
+| **PRISMIC_REPO** | `str` | The name of the repository to be used as context (defaults to `None`). |
+| **PRISMIC_REF** | `str` | The default Prismic reference to be used (defaults to `None`). |
+| **PRISMIC_TOKEN** | `str` | The secret token to be used to authenticate API requests (defaults to `None`). |
 
 ## License
 
