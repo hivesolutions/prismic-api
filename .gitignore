@@ -4,4 +4,4 @@ session.shelve*
 
 /dist
 /build
-/src/prismic_api.egg-info
+/src/prismic-api.egg-info
