@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Prismic API
-# Copyright (c) 2008-2020 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Prismic API.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2020 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -48,11 +39,8 @@ BASE_URL = "https://%s.prismic.io/api/v1/"
 """ The default base URL to be used when no other
 base URL value is provided to the constructor """
 
-class API(
-    appier.API,
-    ref.RefAPI,
-    document.DocumentAPI
-):
+
+class API(appier.API, ref.RefAPI, document.DocumentAPI):
 
     def __init__(self, *args, **kwargs):
         appier.API.__init__(self, *args, **kwargs)
@@ -70,30 +58,34 @@ class API(
         self,
         method,
         url,
-        data = None,
-        data_j = None,
-        data_m = None,
-        headers = None,
-        params = None,
-        mime = None,
-        kwargs = None
+        data=None,
+        data_j=None,
+        data_m=None,
+        headers=None,
+        params=None,
+        mime=None,
+        kwargs=None,
     ):
         auth = kwargs.pop("auth", True)
         kwargs["ref"] = self.ref
-        if auth: kwargs["access_token"] = self.token
+        if auth:
+            kwargs["access_token"] = self.token
 
     def _build_url(self):
         if not self.repo:
-            raise appier.OperationalError(message = "No repo name provided")
+            raise appier.OperationalError(message="No repo name provided")
         if not self.base_url:
-            raise appier.OperationalError(message = "No base URL provided")
+            raise appier.OperationalError(message="No base URL provided")
         self.base_url = self.base_url % self.repo
 
-    def _ensure_ref(self, label = "Master", force = False):
-        if self.ref and not force: return
+    def _ensure_ref(self, label="Master", force=False):
+        if self.ref and not force:
+            return
         self.ref = self.get_label_ref(label)
 
     def _decode(self, data):
-        if not appier.legacy.is_string(data, all = True): return data
-        if appier.legacy.is_bytes(data): data = data.decode("utf-8")
+        if not appier.legacy.is_string(data, all=True):
+            return data
+        if appier.legacy.is_bytes(data):
+            data = data.decode("utf-8")
         return json.loads(data)
