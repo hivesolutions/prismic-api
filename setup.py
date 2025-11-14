@@ -42,6 +42,7 @@ setuptools.setup(
     url="http://prismic-api.hive.pt",
     zip_safe=False,
     packages=["prismic"],
+    test_suite="prismic.test",
     package_dir={"": os.path.normpath("src")},
     install_requires=["appier"],
     classifiers=[
